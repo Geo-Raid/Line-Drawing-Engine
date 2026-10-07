@@ -23,27 +23,21 @@ LRESULT CALLBACK WindowProc(
         case WM_KEYDOWN:
             if (wParam == 'W') {
                 MoveObject("name", 0, -1);
-                ClearBuffer();
             } 
             else if (wParam == 'S') {
                 MoveObject("name", 0, 1);
-                ClearBuffer();
             }
             else if (wParam == 'A') {
                 MoveObject("name", -1, 0);
-                ClearBuffer();
             } 
             else if (wParam == 'D') {
                 MoveObject("name", 1, 0);
-                ClearBuffer();
             }
             else if (wParam == 'E') {
                 RotateObject("name", 15);
-                ClearBuffer();
             }
             else if (wParam == 'Q') {
                 RotateObject("name", -15);
-                ClearBuffer();
             }
 
         case WM_PAINT:

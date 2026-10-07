@@ -5,6 +5,8 @@
 #include "Graphics.h"
 #include "Tools.h"
 
+#define PI 3.1415926
+
 int AddLine(char *name, double x1, double y1, double x2, double y2, unsigned int color) {
     int ObjectIndex = GetIndexOfObject(name);
     if (ObjectIndex == -1) return 0; // Returns if Object is not in ScreenObjects
@@ -56,12 +58,12 @@ int CreateShape(char *name, int sides, int length) {
     double CenterY = ScreenObjects[ObjectIndex].Origin[1];
 
     // Calculate the radius (distance from center to vertices)
-    double Radius = length / (2.0 * sin(M_PI / sides));
+    double Radius = length / (2.0 * sin(PI / sides));
     double xp, yp, xp2, yp2;
-    double TurnAngle = (2.0 * M_PI) / sides;
+    double TurnAngle = (2.0 * PI) / sides;
     double NextAngle;
     
-    double CurrentAngle = M_PI * 3 / 2; 
+    double CurrentAngle = PI * 3 / 2; 
 
     for (int i = 0; i < sides; i++) {
         xp = CenterX + Radius * cos(CurrentAngle);
@@ -77,7 +79,7 @@ int CreateShape(char *name, int sides, int length) {
     }
 
     // Calculates the Internal radius of the shape
-    double radius = length / (2 * tan(M_PI / (double)sides));
+    double radius = length / (2 * tan(PI / (double)sides));
     ScreenObjects[ObjectIndex].InternalRadius = radius;
     return 0;
 }
@@ -87,7 +89,7 @@ void RotateObject(char *name, double angle) {
     if (ObjectIndex == -1) return; // Returns if Object is not in ScreenObjects
 
     int Origin[2] = {ScreenObjects[ObjectIndex].Origin[0], ScreenObjects[ObjectIndex].Origin[1]};
-    double rad = angle * (M_PI / 180.0);
+    double rad = angle * (PI / 180.0);
 
     double x1, y1, x2, y2;
 
@@ -105,26 +107,20 @@ void RotateObject(char *name, double angle) {
 
 }
 
-int CheckCollision(char *object, char *CollisionObject) { // Broken Fix Later. Somthing to do with the +?
+int CheckCollision(char *object, char *CollisionObject) {
     int ObjectIndex = GetIndexOfObject(object);
-    if (ObjectIndex == -1) return 0; // Returns if Object is not in ScreenObjects
+    if (ObjectIndex == -1) return -1; // Returns if Object is not in ScreenObjects
 
     int CollisionObjectIndex = GetIndexOfObject(CollisionObject);
-    if (CollisionObjectIndex == -1) return 0; // Returns if Object is not in ScreenObjects
+    if (CollisionObjectIndex == -1) return -1; // Returns if Object is not in ScreenObjects
 
-    double LineCenter[2];
-    double Distance, dx, dy;;
+    double dx = (double)ScreenObjects[ObjectIndex].Origin[0] - ScreenObjects[CollisionObjectIndex].Origin[0];
+    double dy = (double)ScreenObjects[ObjectIndex].Origin[1] - ScreenObjects[CollisionObjectIndex].Origin[1];
+    double Distance = sqrt(dx * dx + dy * dy);
 
-    for (int i = 0; i < ScreenObjects[ObjectIndex].SideNumber; i++) {
-        LineCenter[0] = (double)(ScreenObjects[ObjectIndex].Sides[i].x1 + ScreenObjects{ObjectIndex}.Sides[i].x2) / 2;
-        LineCenter[1] = (double)(ScreenObjects[ObjectIndex].Sides[i].y1 + ScreenObjects{ObjectIndex}.Sides[i].y2) / 2;
+    double CombinedRadius = ScreenObjects[ObjectIndex].InternalRadius + ScreenObjects[CollisionObjectIndex].InternalRadius;
 
-        dx = ScreenObjects[ObjectIndex].Origin[0] - LineCenter[0];
-        dy = ScreenObjects[ObjectIndex].Origin[1] - LineCenter[1];
-        Distance = sqrt(dx * dx + dy * dy); // Pythagoras to find the distance from the Origin to the center of the line
-    }
-
-    if (Distance < ObjectIndex[CollisionObjectIndex].Radius)
+    if (Distance <= CombinedRadius)
         return 1;
 
     return 0;

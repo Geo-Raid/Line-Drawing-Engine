@@ -7,5 +7,6 @@ extern int AddLine(char *name, double x1, double y1, double x2, double y2, unsig
 extern int MoveObject(char *name, int dx, int dy);
 extern int CreateShape(char *name, int sides, int length);
 extern void RotateObject(char *name, double angle);
+extern int CheckCollision(char *object, char *CollisionObject);
 
 #endif

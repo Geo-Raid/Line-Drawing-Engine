@@ -17,20 +17,19 @@ int main(void) {
 
     AppendObject("triangle1", 0, (int[]){SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2}); // test code for objects
     CreateShape("triangle1", 3, 80);
-    AppendObject("triangle2", 0, (int[]){SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2}); // test code for objects
-    CreateShape("triangle2", 3, 80);
+    AppendObject("name", 0, (int[]){300, 200}); // test code for objects
+    CreateShape("name", 3, 50);
 
     BOOL running = TRUE;
     while (running) {
         // 1. Process standard OS messages
         running = ProcessWindowMessages();
 
-        RotateObject("triangle1", 1);
-        RotateObject("triangle2", -1);
+        printf("Collision: %d\n", CheckCollision("name", "triangle1"));
 
         ClearBuffer();
         DrawObject("triangle1");
-        DrawObject("triangle2");
+        DrawObject("name");
         // 3. Command Windows to instantly update the viewport display area
         InvalidateRect(hwnd, NULL, FALSE);
 
