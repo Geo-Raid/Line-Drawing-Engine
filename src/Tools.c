@@ -23,6 +23,7 @@ struct ScreenObject {
     int SideNumber;
     int Origin[2];
     struct Line Sides[MAX_SIDE_NUMBER];
+    double InternalRadius;
 };
 
 struct ScreenObject ScreenObjects[MAX_NUMBER_OF_OBJECTS];
