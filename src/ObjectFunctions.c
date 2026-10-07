@@ -14,7 +14,7 @@ int AddLine(char *name, double x1, double y1, double x2, double y2, unsigned int
     // Adds the specified line to the Object
     ScreenObjects[ObjectIndex].Sides[ScreenObjects[ObjectIndex].SideNumber] = (struct Line){x1, y1, x2, y2, color};
     ScreenObjects[ObjectIndex].SideNumber++; // Increments the number of sides in the Object
-    return 1;
+    return 0;
 }
 
 int RemoveLine() {
@@ -33,15 +33,15 @@ int MoveObject(char *name, int dx, int dy) {
     int ObjectIndex = GetIndexOfObject(name);
     if (ObjectIndex == -1) return 0; // Returns if Object is not in ScreenObjects
 
-    ScreenObjects[ObjectIndex].Origin[0] += dx;
-    ScreenObjects[ObjectIndex].Origin[1] += dy;
-
     for (int i = 0; i < ScreenObjects[ObjectIndex].SideNumber; i++) {
         ScreenObjects[ObjectIndex].Sides[i].x1 += dx;
         ScreenObjects[ObjectIndex].Sides[i].y1 += dy;
         ScreenObjects[ObjectIndex].Sides[i].x2 += dx;
         ScreenObjects[ObjectIndex].Sides[i].y2 += dy;
     }
+
+    ScreenObjects[ObjectIndex].Origin[0] += dx;
+    ScreenObjects[ObjectIndex].Origin[1] += dy;
 
     return 0;
 }
@@ -85,7 +85,7 @@ void RotateObject(char *name, double angle) {
     int ObjectIndex = GetIndexOfObject(name);
     if (ObjectIndex == -1) return; // Returns if Object is not in ScreenObjects
 
-    int Origin[2] = {ScreenObjects[ObjectIndex].Origin[0], ScreenObjects[ObjectIndex].Origin[0]};
+    int Origin[2] = {ScreenObjects[ObjectIndex].Origin[0], ScreenObjects[ObjectIndex].Origin[1]};
     double rad = angle * (PI / 180.0);
 
     double x1, y1, x2, y2;

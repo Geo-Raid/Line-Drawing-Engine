@@ -4,7 +4,7 @@
 #include "Tools.c"
 
 extern int reduceObject();
-extern int AppendObject(char *name, int sidenumber, int *origin);
+extern void AppendObject(char *name, int sidenumber, int *origin);
 
 extern struct ScreenObject ScreenObjects[50];
 

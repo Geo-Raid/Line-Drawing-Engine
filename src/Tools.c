@@ -14,7 +14,7 @@ struct Line {
     double x2;
     double y2;
     unsigned int color;
-    char uid[5];
+    char uid[10];
 };
 
 
@@ -48,20 +48,21 @@ int reduceObject() {
 }
 
 
-int AppendObject(char *name, int sidenumber, int *origin) {
-    if (name == NULL || origin == NULL) return -1;
+void AppendObject(char *name, int sidenumber, int *origin) {
+    if (name == NULL || origin == NULL) return;
 
     reduceObject();
+
     for (int i = 0; i < MAX_NUMBER_OF_OBJECTS; i++) {
         if (ScreenObjects[i].Name[0] == '\0') {
             memset(&ScreenObjects[i], 0, sizeof(ScreenObjects[i]));
             snprintf(ScreenObjects[i].Name, sizeof(ScreenObjects[i].Name), "%s", name);
             ScreenObjects[i].SideNumber = sidenumber;
             memcpy(ScreenObjects[i].Origin, origin, sizeof(ScreenObjects[i].Origin));
-            return 0;
+            return;
         }
     }
-    return -1;
+    return;
 }
 
 

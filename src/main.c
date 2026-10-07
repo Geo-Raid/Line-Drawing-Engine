@@ -15,16 +15,22 @@ int main(void) {
     // Target a smooth retro cap, like 60 FPS
     init_timer(60.0);
 
-    AppendObject("name", 0, (int[]){150,150}); // test code for objects
-    CreateShape("name", 3, 60);
+    AppendObject("triangle1", 0, (int[]){SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2}); // test code for objects
+    CreateShape("triangle1", 3, 80);
+    AppendObject("triangle2", 0, (int[]){SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2}); // test code for objects
+    CreateShape("triangle2", 3, 80);
 
     BOOL running = TRUE;
     while (running) {
         // 1. Process standard OS messages
         running = ProcessWindowMessages();
 
-        DrawObject("name");
+        RotateObject("triangle1", 1);
+        RotateObject("triangle2", -1);
 
+        ClearBuffer();
+        DrawObject("triangle1");
+        DrawObject("triangle2");
         // 3. Command Windows to instantly update the viewport display area
         InvalidateRect(hwnd, NULL, FALSE);
 
