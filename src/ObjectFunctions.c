@@ -17,8 +17,24 @@ int AddLine(char *name, double x1, double y1, double x2, double y2, unsigned int
     return 0;
 }
 
-int RemoveLine() {
+int RemoveLine(char *name, int SideToRemove) {
+    int ObjectIndex = GetIndexOfObject(name);
+    if (ObjectIndex == -1) return 0; // Returns if Object is not in ScreenObjects
 
+    struct Line Remove = {0.0, 0.0, 0.0, 0.0, 0, ""}; // Change this later for better code
+
+    ScreenObjects[ObjectIndex].Sides[SideToRemove] = Remove;
+
+    for (int i = 0; i < ScreenObjects[ObjectIndex].SideNumber; i++) {
+        if (ScreenObjects[ObjectIndex].Sides[i].x1 == 0 && ScreenObjects[ObjectIndex].Sides[i].x2 == 0) {
+            for (int j = i; j < ScreenObjects[ObjectIndex].SideNumber; j++) {
+                ScreenObjects[ObjectIndex].Sides[j] = ScreenObjects[ObjectIndex].Sides[j + 1]; 
+            }
+            return 0;
+        }
+    }
+
+    return 0;
 }
 
 int RemoveAllLines(char *name) {

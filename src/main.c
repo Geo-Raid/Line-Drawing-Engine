@@ -15,20 +15,15 @@ int main(void) {
     // Target a smooth retro cap, like 60 FPS
     init_timer(60.0);
 
-    AppendObject("triangle1", 0, (int[]){SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2}); // test code for objects
-    CreateShape("triangle1", 3, 80);
-    AppendObject("name", 0, (int[]){300, 200}); // test code for objects
-    CreateShape("name", 3, 50);
+    AppendObject("name", 0, (int[]){SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2}); // test code for objects
+    CreateShape("name", 3, 100);
 
     BOOL running = TRUE;
     while (running) {
         // 1. Process standard OS messages
         running = ProcessWindowMessages();
 
-        printf("Collision: %d\n", CheckCollision("name", "triangle1"));
-
         ClearBuffer();
-        DrawObject("triangle1");
         DrawObject("name");
         // 3. Command Windows to instantly update the viewport display area
         InvalidateRect(hwnd, NULL, FALSE);

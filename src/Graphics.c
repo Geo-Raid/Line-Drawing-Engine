@@ -2,10 +2,10 @@
 #include "Tools.h"
 #include <math.h>
 
-#define SCREEN_WIDTH 320
+#define SCREEN_WIDTH 360
 #define SCREEN_HEIGHT 240
 
-#define DISPLAY_SCALE 3
+#define DISPLAY_SCALE 2
 
 unsigned int frameBuffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 
