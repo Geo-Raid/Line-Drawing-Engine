@@ -21,7 +21,10 @@ struct Line {
 struct ScreenObject {
     char Name[MAX_OBJECT_NAME_LENGTH];
     int SideNumber;
-    int Origin[2];
+    double Origin[2];
+    double Angle; // radians
+    double TurnSpeed; // radians
+    double Speed[2]; // The speed in Delta x, Delta y
     struct Line Sides[MAX_SIDE_NUMBER];
     double InternalRadius;
 };
@@ -41,15 +44,14 @@ int reduceObject() {
         }
     }
 
-    for (int i = nextIndex; i < MAX_NUMBER_OF_OBJECTS; i++) {
+    for (int i = nextIndex; i < MAX_NUMBER_OF_OBJECTS; i++)
         memset(&ScreenObjects[i], 0, sizeof(ScreenObjects[i]));
-    }
 
     return 0;
 }
 
 
-void AppendObject(char *name, int sidenumber, int *origin) {
+void AppendObject(char *name, int sidenumber, double *origin) {
     if (name == NULL || origin == NULL) return;
 
     reduceObject();

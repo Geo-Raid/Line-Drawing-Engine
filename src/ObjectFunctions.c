@@ -45,7 +45,7 @@ int RemoveAllLines(char *name) {
     return 0;
 }
 
-int MoveObject(char *name, int dx, int dy) {
+int MoveObject(char *name, double dx, double dy) {
     int ObjectIndex = GetIndexOfObject(name);
     if (ObjectIndex == -1) return 0; // Returns if Object is not in ScreenObjects
 
@@ -77,7 +77,7 @@ int CreateShape(char *name, int sides, int length) {
     double Radius = length / (2.0 * sin(PI / sides));
     double xp, yp, xp2, yp2;
     double TurnAngle = (2.0 * PI) / sides;
-    double NextAngle;
+    double NextAngle = 0.0;
     
     double CurrentAngle = PI * 3 / 2; 
 
@@ -97,6 +97,7 @@ int CreateShape(char *name, int sides, int length) {
     // Calculates the Internal radius of the shape
     double radius = length / (2 * tan(PI / (double)sides));
     ScreenObjects[ObjectIndex].InternalRadius = radius;
+    
     return 0;
 }
 
@@ -107,9 +108,21 @@ void RotateObject(char *name, double angle) {
     int Origin[2] = {ScreenObjects[ObjectIndex].Origin[0], ScreenObjects[ObjectIndex].Origin[1]};
     double rad = angle * (PI / 180.0);
 
-    double x1, y1, x2, y2;
+
+    // Adds the angle to the object in Radians
+    ScreenObjects[ObjectIndex].Angle += rad;
+
+    // Checks to see if the angle is bigger or smaller than 2PI
+    if (ScreenObjects[ObjectIndex].Angle > (2 * PI)) {
+        ScreenObjects[ObjectIndex].Angle -= (2 * PI);
+    }
+    else if (ScreenObjects[ObjectIndex].Angle < -(2 * PI)) {
+        ScreenObjects[ObjectIndex].Angle += (2 * PI);
+    }
 
     for (int i = 0; i < ScreenObjects[ObjectIndex].SideNumber; i++) {
+        double x1, y1, x2, y2;
+        
         x1 = ScreenObjects[ObjectIndex].Sides[i].x1 - Origin[0];
         y1 = ScreenObjects[ObjectIndex].Sides[i].y1 - Origin[1];
         x2 = ScreenObjects[ObjectIndex].Sides[i].x2 - Origin[0];
@@ -123,7 +136,7 @@ void RotateObject(char *name, double angle) {
 
 }
 
-int CheckCollision(char *object, char *CollisionObject) {
+BOOL CheckCollision(char *object, char *CollisionObject) {
     int ObjectIndex = GetIndexOfObject(object);
     if (ObjectIndex == -1) return -1; // Returns if Object is not in ScreenObjects
 
@@ -137,7 +150,7 @@ int CheckCollision(char *object, char *CollisionObject) {
     double CombinedRadius = ScreenObjects[ObjectIndex].InternalRadius + ScreenObjects[CollisionObjectIndex].InternalRadius;
 
     if (Distance <= CombinedRadius)
-        return 1;
+        return TRUE;
 
-    return 0;
+    return FALSE;
 }

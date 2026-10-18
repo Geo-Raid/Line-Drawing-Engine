@@ -2,10 +2,10 @@
 #include "Tools.h"
 #include <math.h>
 
-#define SCREEN_WIDTH 360
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 
-#define DISPLAY_SCALE 2
+#define DISPLAY_SCALE 1.5
 
 unsigned int frameBuffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 
@@ -34,7 +34,7 @@ int DrawLine(int x1, int y1, int x2, int y2, unsigned int color) {
         }
     }
 
-    return 1;
+    return 0;
 }
 
 
